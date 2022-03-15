@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { useLayoutEffect, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { Button, Input, Text } from "react-native-elements";
+import { auth } from "../firebase";
 
 const RegisterScreen = ({ navigation }) => {
   const [fullName, setFullName] = useState("");
@@ -12,10 +13,22 @@ const RegisterScreen = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerBackTitle: "Back to Login",
-    })
+    });
   }, [navigation]);
 
-  const register = () => {};
+  const register = () => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((authUser) => {
+        authUser.user.updateProfile({
+          displayName: fullName,
+          photoURL:
+            imageUrl ||
+            "https://i.pinimg.com/originals/19/cf/78/19cf789a8e216dc898043489c16cec00.jpg",
+        });
+      })
+      .catch((err) => alert(err.message));
+  };
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>

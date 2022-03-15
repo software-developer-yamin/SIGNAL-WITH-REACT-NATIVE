@@ -25,3 +25,4 @@ const db = app.firestore();
 const auth = firebase.auth();
 
 export { db, auth };
+

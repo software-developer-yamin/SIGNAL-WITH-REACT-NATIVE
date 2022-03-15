@@ -1,11 +1,21 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { Button, Image, Input } from "react-native-elements";
+import { auth } from "../firebase";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        navigation.replace("Home");
+      }
+    });
+    return unsubscribe;
+  }, [auth]);
 
   const signIn = () => {};
 
@@ -36,7 +46,12 @@ const Login = ({ navigation }) => {
         />
       </View>
       <Button title="Login" containerStyle={styles.button} onPress={signIn} />
-      <Button onPress={() => navigation.navigate("Register")} title="Register" type="outline" containerStyle={styles.button} />
+      <Button
+        onPress={() => navigation.navigate("Register")}
+        title="Register"
+        type="outline"
+        containerStyle={styles.button}
+      />
       <View style={{ height: 100 }} />
     </KeyboardAvoidingView>
   );
