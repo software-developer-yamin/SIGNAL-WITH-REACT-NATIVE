@@ -3,7 +3,7 @@ import { useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { Button, Image, Input } from "react-native-elements";
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -36,7 +36,7 @@ const Login = () => {
         />
       </View>
       <Button title="Login" containerStyle={styles.button} onPress={signIn} />
-      <Button title="Register" type="outline" containerStyle={styles.button} />
+      <Button onPress={() => navigation.navigate("Register")} title="Register" type="outline" containerStyle={styles.button} />
       <View style={{ height: 100 }} />
     </KeyboardAvoidingView>
   );
