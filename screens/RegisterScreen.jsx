@@ -1,13 +1,19 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
-import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
-import { Button, Input } from "react-native-elements";
+import { useLayoutEffect, useState } from "react";
+import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
+import { Button, Input, Text } from "react-native-elements";
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ navigation }) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerBackTitle: "Back to Login",
+    })
+  }, [navigation]);
 
   const register = () => {};
 
@@ -52,6 +58,7 @@ const RegisterScreen = () => {
         onPress={register}
         title="Register"
       />
+      <View style={{ height: 100 }} />
     </KeyboardAvoidingView>
   );
 };
@@ -59,7 +66,18 @@ const RegisterScreen = () => {
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
-  container: {},
-  inputContainer: {},
-  button: {},
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+    backgroundColor: "white",
+  },
+  inputContainer: {
+    width: 300,
+  },
+  button: {
+    width: 200,
+    marginTop: 10,
+  },
 });
